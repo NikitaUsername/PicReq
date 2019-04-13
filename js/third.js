@@ -16,12 +16,14 @@ for (var i = 0; i < 4; i++){
 
 var
  countLoadImgs = 0,
- countDrawImgs;
+ quote = null;
+ countDrawImgs = 0;
 console.log(countLoadImgs);
 
 canvas.id = 'canvas';
 save.id = 'save';
 
+div.style.width = '600px';
 div.style.width = '600px';
 canvas.style.width = '600px';
 canvas.style.height = '600px';
@@ -44,6 +46,10 @@ save.style.margin = '20px 250px 0 250px';
 //getPic();
 get();
 draw();
+getQuote();
+//setTimeout(write(),10000);
+write();
+
 
 // getPic
 function getPic(){
@@ -63,7 +69,7 @@ function get(){
   $.ajax({
     url: "https://api.codetabs.com/v1/proxy",
     data: {
-      quest : 'https://api.unsplash.com/photos/random?client_id=1bf5ac4b983dada224863bfb469103d7b2d8577fc38908b5fe2813c835a66d6c&count=4&orentation=squarish&w=300&h=300'
+      quest : 'https://api.unsplash.com/photos/random?client_id=c435c09768763ddee078f000f4a7edf2ddc71a778c652c48dfc8c7273f98a157&count=4&orentation=squarish&w=300&h=300'
     }
   })
   .done(
@@ -85,22 +91,76 @@ if (countLoadImgs == 4) {
  var ctx = canvas.getContext('2d');
 
 
- ctx.drawImage(imgs[0],0,0,300,300,0,0,75,35.5);
+ ctx.drawImage(imgs[0],0,0,300,300,0,0,300,150);
  ctx.drawImage(imgs[1],0,0,300,300,150,0,300,150);
  ctx.drawImage(imgs[2],0,0,300,300,0,75,300,150);
  ctx.drawImage(imgs[3],0,0,300,300,150,75,300,150);
- ctx.fillStyle = "rgba(0,0,0,0.35)";
+ ctx.fillStyle = "rgba(0,0,0,0.3)";
  ctx.fillRect(0,0,600,600);
-
-
-  countDrawImgs++;
+ countDrawImgs = 1;
    } else {
         setTimeout(draw, 1);
     }
   
 }
 
+function getQuote(){
+  $.ajax({
+    url: "https://api.forismatic.com/api/1.0/",
+    jsonp: "jsonp",
+    dataType: "jsonp",
+    data: {
+      method: "getQuote",
+      lang: "ru",
+      format: "jsonp"
+    }
+  })
+  .done(
+    function(data) {
+      quote = data.quoteText;
+     
+   })
+}
 
+function rewrite(context, text, x, y, maxWidth, lineHeight){
+      var 
+          words = text.split(" "),
+          countWords = words.length,
+          line = "",
+          countRaws = Math.floor(context.measureText(text).width / 550);
+          
+      y -= (countRaws / 2) * lineHeight;
+      for (var n = 0; n < countWords; n++) {
+          var 
+              testLine = line + words[n] + " ",
+              testWidth = context.measureText(testLine).width;
+
+          if (testWidth > maxWidth) {
+              context.fillText(line, x, y);
+              line = words[n] + " ";
+              y += lineHeight;
+          }
+          else {
+              line = testLine;
+          }
+      }
+      context.fillText(line, x, y);
+}
+
+function write(){ 
+alert(quote);
+  if (quote != null && countDrawImgs == 1){
+    var context = canvas.getContext('2d');
+
+    context.fillStyle = 'white';
+    context.font = "italic 22pt Arial";
+    context.textAlign = "center";
+    rewrite(context, quote, canvas.width/2, canvas.height/2, 550, 40);
+  }
+  else{
+     setTimeout(write, 1000);  
+  }
+}
 
 
 
