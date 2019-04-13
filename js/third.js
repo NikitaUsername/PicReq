@@ -23,10 +23,13 @@ console.log(countLoadImgs);
 canvas.id = 'canvas';
 save.id = 'save';
 
-div.style.width = '600px';
-div.style.width = '600px';
-canvas.style.width = '600px';
-canvas.style.height = '600px';
+div.style.width = '720px';
+div.style.height = '720px';
+div.style.display = 'flex';
+div.style.flexDirection = 'column';
+div.style.alignItems = 'center';
+canvas.width = '600';
+canvas.height = '600';
 div.style.margin = '0 auto 0 auto';
 
 
@@ -91,10 +94,10 @@ if (countLoadImgs == 4) {
  var ctx = canvas.getContext('2d');
 
 
- ctx.drawImage(imgs[0],0,0,300,300,0,0,300,150);
- ctx.drawImage(imgs[1],0,0,300,300,150,0,300,150);
- ctx.drawImage(imgs[2],0,0,300,300,0,75,300,150);
- ctx.drawImage(imgs[3],0,0,300,300,150,75,300,150);
+ ctx.drawImage(imgs[0],0,0,300,300,0,0,300,300);
+ ctx.drawImage(imgs[1],0,0,300,300,300,0,300,300);
+ ctx.drawImage(imgs[2],0,0,300,300,0,300,300,300);
+ ctx.drawImage(imgs[3],0,0,300,300,300,300,300,300);
  ctx.fillStyle = "rgba(0,0,0,0.3)";
  ctx.fillRect(0,0,600,600);
  countDrawImgs = 1;
@@ -148,7 +151,7 @@ function rewrite(context, text, x, y, maxWidth, lineHeight){
 }
 
 function write(){ 
-alert(quote);
+
   if (quote != null && countDrawImgs == 1){
     var context = canvas.getContext('2d');
 
@@ -158,7 +161,7 @@ alert(quote);
     rewrite(context, quote, canvas.width/2, canvas.height/2, 550, 40);
   }
   else{
-     setTimeout(write, 1000);  
+     setTimeout(write, 1);  
   }
 }
 
