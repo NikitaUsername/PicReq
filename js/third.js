@@ -39,13 +39,17 @@ save.style.backgroundColor = 'black';
 save.style.color = 'white';
 save.innerHTML = 'SAVE';
 save.style.margin = '20px 250px 0 250px';
-//save.onclick = 
-//	function(){
-//		var
-//			c = document.getElementById('canvas')
-//			URL = c.toDataURL("");
-			//ДОДЕЛАТЬ ФУНКЦИЮ
-//	}
+save.onclick = 
+	function(){
+		var
+			c = document.getElementById('canvas')
+			URL = c.toDataURL("image/jpg");
+			link = document.createElement("a");
+			
+ link.href = URL;
+ link.download = "stupid_pic.jpg";
+ link.click();
+}
 //getPic();
 get();
 draw();
@@ -57,7 +61,7 @@ write();
 // getPic
 function getPic(){
 var xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://api.codetabs.com/v1/proxy?' + 'quest=https://api.unsplash.com/photos/random?' + 'client_id=93d496ca0d56955281ca9a8ec2b1a87610bdc2ff60d2edbbe38982ffc123ac2d&count=4', false);
+xhr.open('GET', 'https://api.codetabs.com/v1/proxy?' + 'quest=https://api.unsplash.com/photos/random?' + 'client_id=1bf5ac4b983dada224863bfb469103d7b2d8577fc38908b5fe2813c835a66d6c&count=4', false);
 xhr.send();
 var json = JSON.parse(xhr.responseText);
 //alert(json.urls.small);
@@ -72,7 +76,7 @@ function get(){
   $.ajax({
     url: "https://api.codetabs.com/v1/proxy",
     data: {
-      quest : 'https://api.unsplash.com/photos/random?client_id=c435c09768763ddee078f000f4a7edf2ddc71a778c652c48dfc8c7273f98a157&count=4&orentation=squarish&w=300&h=300'
+      quest : 'https://api.unsplash.com/photos/random?client_id=a5099bdbc8229dd88f38cc82f5f6e24e1ab658f8ca7870ee5ec70b46644a08fd&count=4&orentation=squarish&w=300&h=300'
     }
   })
   .done(
